@@ -1,0 +1,20 @@
+<xs:schema xmlns:tns="http://userservice/" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://userservice/" version="1.0">
+  <xs:element name="getPendingMaps" type="tns:getPendingMaps"/>
+  <xs:element name="getPendingMapsResponse" type="tns:getPendingMapsResponse"/>
+  <xs:complexType name="getPendingMaps">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPendingMapsResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Exception" type="tns:Exception"/>
+  <xs:complexType name="Exception">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
