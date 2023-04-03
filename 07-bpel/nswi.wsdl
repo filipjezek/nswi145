@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions targetNamespace="http://nswi145/" name="MapService"
+  xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+  xmlns:wsp="http://www.w3.org/ns/ws-policy"
+  xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy"
+  xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+  xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:nswi="http://nswi145"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <documentation></documentation>
+  <types>
+    <xs:schema version="1.0" targetNamespace="http://nswi145/"
+      xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="ApproveMap" type="nswi:ApproveMap" />
+      <xs:element name="ApproveMapResponse" type="nswi:ApproveMapResponse" />
+      <xs:element name="Exception" type="nswi:Exception" />
+      <xs:element name="UploadMap" type="nswi:UploadMap" />
+      <xs:element name="UploadMapResponse" type="nswi:UploadMapResponse" />
+      <xs:element name="ChangeMapStatus" type="nswi:ChangeMapStatus" />
+      <xs:element name="ChangeMapStatusResponse" type="nswi:ChangeMapStatusResponse" />
+      <xs:element name="map" type="nswi:map" />
+      <xs:element name="mapUploadResult" type="nswi:mapUploadResult" />
+
+      <xs:element name="CreateThread" type="nswi:CreateThread" />
+      <xs:element name="CreateThreadResponse" type="nswi:CreateThreadResponse" />
+      <xs:element name="WritePost" type="nswi:WritePost" />
+      <xs:element name="WritePostResponse" type="nswi:WritePostResponse" />
+
+      <xs:complexType name="UploadMap">
+        <xs:sequence>
+          <xs:element name="map" type="nswi:map" />
+          <xs:element name="id" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ChangeMapStatus">
+        <xs:sequence>
+          <xs:element name="status" type="xs:string" />
+          <xs:element name="id" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ChangeMapStatusResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="map">
+        <xs:sequence>
+          <xs:element name="name" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="UploadMapResponse">
+        <xs:sequence>
+          <xs:element name="MapUploadResult" type="nswi:mapUploadResult" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="mapUploadResult">
+        <xs:sequence>
+          <xs:element name="OK" type="xs:boolean" />
+          <xs:element name="id" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ApproveMap">
+        <xs:sequence>
+          <xs:element name="id" type="xs:int" />
+          <xs:element name="userId" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ApproveMapResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="Exception">
+        <xs:sequence>
+          <xs:element name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="WritePost">
+        <xs:sequence>
+          <xs:element name="post" type="xs:string" />
+          <xs:element name="threadId" type="xs:int" />
+          <xs:element name="userId" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="WritePostResponse">
+        <xs:sequence>
+          <xs:element name="return" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CreateThread">
+        <xs:sequence>
+          <xs:element name="name" type="xs:string" />
+          <xs:element name="userId" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CreateThreadResponse">
+        <xs:sequence>
+          <xs:element name="return" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </types>
+
+  <message name="UploadMap">
+    <part name="params" element="nswi:UploadMap" />
+  </message>
+  <message name="UploadMapResponse">
+    <part name="params" element="nswi:UploadMapResponse" />
+  </message>
+  <message name="ApproveMap">
+    <part name="params" element="nswi:ApproveMap" />
+  </message>
+  <message name="ApproveMapResponse">
+    <part name="params" element="nswi:ApproveMapResponse" />
+  </message>
+  <message name="ChangeMapStatus">
+    <part name="params" element="nswi:ChangeMapStatus" />
+  </message>
+  <message name="ChangeMapStatusResponse">
+    <part name="params" element="nswi:ChangeMapStatusResponse" />
+  </message>
+
+  <message name="WritePost">
+    <part name="params" element="nswi:WritePost" />
+  </message>
+  <message name="WritePostResponse">
+    <part name="params" element="nswi:WritePostResponse" />
+  </message>
+  <message name="CreateThread">
+    <part name="params" element="nswi:CreateThread" />
+  </message>
+  <message name="CreateThreadResponse">
+    <part name="params" element="nswi:CreateThreadResponse" />
+  </message>
+
+  <portType name="MapPort">
+    <operation name="UploadMap">
+      <input message="nswi:UploadMap" />
+      <output message="nswi:UploadMapResponse" />
+    </operation>
+    <operation name="ApproveMap">
+      <input message="nswi:ApproveMap" />
+      <output message="nswi:ApproveMapResponse" />
+      <fault name="Exception" message="nswi:Exception"></fault>
+    </operation>
+    <operation name="ChangeMapStatus">
+      <input message="nswi:ChangeMapStatus" />
+      <output message="nswi:ChangeMapStatusResponse" />
+      <fault name="Exception" message="nswi:Exception"></fault>
+    </operation>
+  </portType>
+  <portType name="MapClientPort">
+    <operation name="UploadMapCallback">
+      <input message="nswi:UploadMapResponse" />
+    </operation>
+    <operation name="ApproveMapCallback">
+      <input message="nswi:ApproveMapResponse" />
+    </operation>
+    <operation name="ChangeMapStatusCallback">
+      <input message="nswi:ChangeMapStatusResponse" />
+    </operation>
+  </portType>
+  <portType name="ForumPort">
+    <operation name="WritePost">
+      <input message="nswi:WritePost" />
+      <output message="nswi:WritePostResponse" />
+      <fault name="Exception" message="nswi:Exception"></fault>
+    </operation>
+    <operation name="CreateThread">
+      <input message="nswi:CreateThread" />
+      <output message="nswi:CreateThreadResponse" />
+    </operation>
+  </portType>
+  <portType name="ForumClientPort">
+    <operation name="WritePostCallback">
+      <input message="nswi:WritePostResponse" />
+    </operation>
+    <operation name="CreateThreadCallback">
+      <input message="nswi:CreateThreadResponse" />
+    </operation>
+  </portType>
+  <portType name="ProcessPort">
+    <operation name="UploadMap">
+      <input message="nswi:UploadMap" />
+    </operation>
+  </portType>
+
+  <binding name="MapPortBinding" type="nswi:MapPort">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+    <operation name="UploadMap">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="ApproveMap">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="ChangeMapStatus">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="MapClientPortBinding" type="nswi:MapClientPort">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+    <operation name="UploadMapCallback">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+    </operation>
+    <operation name="ApproveMapCallback">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+    </operation>
+    <operation name="ChangeMapStatusCallback">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+    </operation>
+  </binding>
+  <binding name="ForumPortBinding" type="nswi:ForumPort">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+    <operation name="WritePost">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="CreateThread">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="ForumClientPortBinding" type="nswi:ForumClientPort">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+    <operation name="WritePostCallback">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+    </operation>
+    <operation name="CreateThreadCallback">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+    </operation>
+  </binding>
+  <binding name="ProcessPortBinding" type="nswi:ProcessPort">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+    <operation name="UploadMap">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+    </operation>
+  </binding>
+
+  <service name="MapService">
+    <port name="MapPort" binding="nswi:MapPortBinding">
+      <soap:address location="http://127.0.0.1:8000/Map" />
+    </port>
+  </service>
+  <service name="ForumService">
+    <port name="ForumPort" binding="nswi:ForumPortBinding">
+      <soap:address location="http://127.0.0.1:8000/Forum" />
+    </port>
+  </service>
+  <service name="ProcessService">
+    <port name="ProcessPort" binding="nswi:ProcessPortBinding">
+      <soap:address location="http://localhost:8080/ode/processes/Process/main" />
+    </port>
+    <port name="MapClientPort" binding="nswi:MapClientPortBinding">
+      <soap:address location="http://localhost:8080/ode/processes/Process/map" />
+    </port>
+    <port name="ForumClientPort" binding="nswi:ForumClientPortBinding">
+      <soap:address location="http://localhost:8080/ode/processes/Process/forum" />
+    </port>
+  </service>
+
+  <plnk:partnerLinkType name="ProcessLinkType">
+    <plnk:role name="ProcessExecutorRole" portType="nswi:ProcessPort" />
+  </plnk:partnerLinkType>
+  <plnk:partnerLinkType name="MapLinkType">
+    <plnk:role name="MapServiceRole" portType="nswi:MapPort" />
+    <plnk:role name="MapClientRole" portType="nswi:MapClientPort" />
+  </plnk:partnerLinkType>
+  <plnk:partnerLinkType name="ForumLinkType">
+    <plnk:role name="ForumServiceRole" portType="nswi:ForumPort" />
+    <plnk:role name="ForumClientRole" portType="nswi:ForumClientPort" />
+  </plnk:partnerLinkType>
+</definitions>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<process name="MyProcess"
+  targetNamespace="http://nswi145"
+  xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:nswi="http://nswi145"
+  queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"
+  expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0">
+
+  <import location="nswi.wsdl"
+    namespace="http://nswi145"
+    importType="http://schemas.xmlsoap.org/wsdl/" />
+
+  <partnerLinks>
+    <partnerLink name="ProcessLink"
+      partnerLinkType="nswi:ProcessLink"
+      myRole="ProcessExecutorRole" />
+    <partnerLink name="ForumLink"
+      partnerLinkType="nswi:ForumLinkType"
+      myRole="ForumClientRole"
+      partnerRole="ForumServiceRole" />
+    <partnerLink name="MapLink"
+      partnerLinkType="nswi:MapLinkType"
+      myRole="MapClientRole"
+      partnerRole="MapServiceRole" />
+  </partnerLinks>
+
+  <variables>
+    <variable name="inputs" messageType="nswi:UploadMap" />
+    <variable name="mapUploadResponse" messageType="nswi:UploadMapResponse" />
+    <variable name="changeMapStatusRequest" messageType="nswi:ChangeMapStatus" />
+    <variable name="createThreadRequest" messageType="nswi:CreateThread" />
+    <variable name="createThreadResponse" messageType="nswi:CreateThreadResponse" />
+    <variable name="writePostRequest" messageType="nswi:WritePost" />
+  </variables>
+
+  <sequence>
+
+    <receive
+      name="ReceiveMapUploadInputs"
+      partnerLink="ProcessLink"
+      portType="nswi:ProcessPort"
+      operation="UploadMap"
+      variable="inputs"
+      createInstance="yes" />
+
+    <invoke
+      name="MapUploadInvoke"
+      partnerLink="MapLink"
+      operation="UploadMap"
+      inputVariable="inputs"
+      outputVariable="mapUploadReponse"
+    />
+
+    <if>
+      <condition>$mapUploadResponse/mapUploadResult/OK</condition>
+      <assign name="InitMapStatusRequest">
+        <copy>
+          <from>
+            <literal>
+              <nswi:ChangeMapStatus>
+                <nswi:id></nswi:id>
+                <nswi:status>pending</nswi:status>
+              </nswi:ChangeMapStatus>
+            </literal>
+          </from>
+          <to variable="changeMapStatusRequest" />
+        </copy>
+        <copy>
+          <from>$mapUploadResponse/mapUploadResult/id</from>
+          <to>$changeMapStatusRequest/id</to>
+        </copy>
+      </assign>
+      <assign name="InitCreateThreadRequest">
+        <copy>
+          <from>
+            <literal>
+              <nswi:CreateThread>
+                <nswi:name>I have created a new map, check it out</nswi:name>
+                <nswi:userId>12</nswi:userId>
+              </nswi:CreateThread>
+            </literal>
+          </from>
+          <to variable="createThreadRequest" />
+        </copy>
+      </assign>
+
+      <flow>
+        <links>
+          <link name="threadCreatedLink" />
+        </links>
+
+        <invoke
+          name="MapStatusInvoke"
+          partnerLink="MapLink"
+          operation="ChangeMapStatus"
+          inputVariable="changeMapStatusRequest"
+        />
+
+        <invoke
+          name="CreateThreadInvoke"
+          partnerLink="ForumLink"
+          operation="CreateThread"
+          inputVariable="createThreadResponse"
+        >
+          <sources>
+            <source name="threadCreatedLink" />
+          </sources>
+        </invoke>
+
+        <sequence>
+          <targets>
+            <target name="threadCreatedLink" />
+          </targets>
+
+          <assign name="InitWritePostRequest">
+            <copy>
+              <from>
+                <literal>
+                  <nswi:WritePost>
+                    <nswi:threadId></nswi:threadId>
+                    <nswi:userId>12</nswi:userId>
+                    <nswi:post></nswi:post>
+                  </nswi:WritePost>
+                </literal>
+              </from>
+              <to variable="writePostRequest" />
+            </copy>
+            <copy>
+              <from>$createThreadResponse/return</from>
+              <to>$writePostRequest/threadId</to>
+            </copy>
+            <copy>
+              <from>concat('the map can be found here: https://mygame/maps/',
+                $mapUploadResponse/mapUploadResult/id)</from>
+              <to>$writePostRequest/post</to>
+            </copy>
+          </assign>
+
+          <invoke
+            name="WritePostInvoke"
+            partnerLink="ForumLink"
+            operation="WritePost"
+            inputVariable="writePostRequest"
+          />
+        </sequence>
+
+
+      </flow>
+    </if>
+
+  </sequence>
+
+</process>
