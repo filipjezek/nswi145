@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- All of my service outputs were wery brief so I made something up -->
+<ForumContent xmlns="http://nswi145/">
+  <Thread author="2" id="1">
+    <Name xml:lang="en">Test thread</Name>
+    <Posts>
+      <Post author="2" id="1">
+        <Content xml:lang="en">Hello, how is everyone doing?</Content>
+      </Post>
+      <Post author="43" id="2">
+        <Content xml:lang="en">What a nice weekend</Content>
+      </Post>
+    </Posts>
+  </Thread>
+  <Thread author="78" id="2">
+    <Name xml:lang="en">Upcoming changes of the ranking system</Name>
+    <Posts>
+      <Post author="78" id="3">
+        <Content xml:lang="en">So, as we have hinted several times, the major ranking rework is coming.</Content>
+      </Post>
+      <Post author="12" id="4">
+        <Content xml:lang="en">Hopefully this will put a stop to players abusing mechanic XYZ</Content>
+      </Post>
+    </Posts>
+  </Thread>
+</ForumContent>

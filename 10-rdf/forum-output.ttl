@@ -1,0 +1,40 @@
+
+    @prefix nswi: <http://example.com/nswi145/> .
+    @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+    @prefix sioc: <http://rdfs.org/sioc/ns#> .
+    @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+    
+    <http://nswi145/Thread/1> a sioc:Thread ;
+    rdfs:label "Test thread"@en .
+    <http://nswi145/User/2> sioc:creator_of <http://nswi145/Thread/1> .
+    
+    
+    <http://nswi145/Post/1> a sioc:Post ;
+    sioc:content "Hello, how is everyone doing?"@en ;
+    sioc:has_container "http://nswi145/Thread/1" .
+    <http://nswi145/User/2> sioc:creator_of <http://nswi145/Post/1> .
+    
+  
+    <http://nswi145/Post/2> a sioc:Post ;
+    sioc:content "What a nice weekend"@en ;
+    sioc:has_container "http://nswi145/Thread/1" .
+    <http://nswi145/User/43> sioc:creator_of <http://nswi145/Post/2> .
+    
+  
+    <http://nswi145/Thread/2> a sioc:Thread ;
+    rdfs:label "Upcoming changes of the ranking system"@en .
+    <http://nswi145/User/78> sioc:creator_of <http://nswi145/Thread/2> .
+    
+    
+    <http://nswi145/Post/3> a sioc:Post ;
+    sioc:content "So, as we have hinted several times, the major ranking rework is coming."@en ;
+    sioc:has_container "http://nswi145/Thread/2" .
+    <http://nswi145/User/78> sioc:creator_of <http://nswi145/Post/3> .
+    
+  
+    <http://nswi145/Post/4> a sioc:Post ;
+    sioc:content "Hopefully this will put a stop to players abusing mechanic XYZ"@en ;
+    sioc:has_container "http://nswi145/Thread/2" .
+    <http://nswi145/User/12> sioc:creator_of <http://nswi145/Post/4> .
+    
+  

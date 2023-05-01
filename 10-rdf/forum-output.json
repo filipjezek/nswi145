@@ -1,0 +1,65 @@
+{
+  "@context": {
+    "@base": "http://example.com/nswi145/",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "sioc": "http://rdfs.org/sioc/ns#",
+    "threads": "@graph",
+    "author": {
+      "@reverse": "sioc:creator_of",
+      "@type": "@id"
+    },
+    "name": {
+      "@language": "en",
+      "@id": "rdfs:label"
+    },
+    "content": {
+      "@id": "sioc:content",
+      "@language": "en"
+    },
+    "posts": {
+      "@reverse": "sioc:has_container"
+    }
+  },
+  "threads": [
+    {
+      "@id": "Thread/1",
+      "@type": "sioc:Thread",
+      "author": "Users/2",
+      "name": "Test thread",
+      "posts": [
+        {
+          "@id": "Post/1",
+          "@type": "sioc:Post",
+          "author": "Users/2",
+          "content": "Hello, how is everyone doing?"
+        },
+        {
+          "@id": "Post/2",
+          "@type": "sioc:Post",
+          "author": "Users/43",
+          "content": "What a nice weekend"
+        }
+      ]
+    },
+    {
+      "@id": "Thread/2",
+      "@type": "sioc:Thread",
+      "author": "Users/78",
+      "name": "Upcoming changes of the ranking system",
+      "posts": [
+        {
+          "@id": "Post/3",
+          "@type": "sioc:Post",
+          "author": "Users/78",
+          "content": "So, as we have hinted several times, the major ranking rework is coming."
+        },
+        {
+          "@id": "Post/4",
+          "@type": "sioc:Post",
+          "author": "Users/12",
+          "content": "Hopefully this will put a stop to players abusing mechanic XYZ"
+        }
+      ]
+    }
+  ]
+}
