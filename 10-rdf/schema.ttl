@@ -1,9 +1,10 @@
 @prefix nswi: <http://example.com/nswi145/> .
+@prefix rdf: <https://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix vgo: <http://purl.org/net/VideoGameOntology#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-nswi:approved a rdfs:Property ;
+nswi:approved a rdf:Property ;
   rdfs:label "approved"@en ;
   rdfs:domain vgo:Player ;
   rdfs:range vgo:PlayingArea .
@@ -11,22 +12,22 @@ nswi:approved a rdfs:Property ;
 nswi:MapStatus a rdfs:Class ;
   rdfs:label "map status"@en .
 
-nswi:status a rdfs:Property ;
+nswi:status a rdf:Property ;
   rdfs:label "map status"@en ;
   rdfs:domain vgo:PlayingArea ;
   rdfs:range nswi:MapStatus .
 
-nswi:difficulty a rdfs:Property ;
+nswi:difficulty a rdf:Property ;
   rdfs:label "map difficulty"@en ;
   rdfs:domain vgo:PlayingArea ;
   rdfs:range xsd:decimal .
 
-nswi:pp a rdfs:Property ;
+nswi:pp a rdf:Property ;
   rdfs:label "performance points"@en ;
   rdfs:domain vgo:Session ;
   rdfs:range xsd:decimal .
 
-nswi:ofMap a rdfs:Property ;
+nswi:ofMap a rdf:Property ;
   rdfs:label "of map"@en ;
   rdfs:domain vgo:Session ;
   rdfs:range xsd:PlayingArea .
